@@ -105,6 +105,8 @@
 
 ### 2. 이 설정 복제
 
+> **참고:** `~/.config/opencode/opencode.jsonc`에 기존 설정이 있다면 먼저 백업하세요.
+
 <details>
 <summary><b>macOS / Linux</b></summary>
 
@@ -139,14 +141,23 @@ copy %USERPROFILE%\opencode-config\opencode.jsonc %USERPROFILE%\.config\opencode
 ```
 </details>
 
-### 3. 확인
+### 3. 플러그인 설치
+
+```bash
+cd ~/.config/opencode
+npm install
+```
+
+이 명령어로 필요한 opencode 플러그인(notify, vibeguard, websearch-cited)이 설치됩니다.
+
+### 4. 확인
 
 ```bash
 opencode --version
 # opencode CLI 버전이 표시됩니다
 ```
 
-끝입니다. 별도 설정이 필요 없습니다 — 모든 에이전트, 스킬, 워크플로가 이미 구성되어 있습니다.
+끝입니다. 모든 에이전트, 스킬, 플러그인, 워크플로가 구성되었습니다.
 
 <br>
 
@@ -238,10 +249,13 @@ opencode
 
 ```
 ~/.config/opencode/
-└── opencode.jsonc          # 인라인 지침이 포함된 메인 설정 파일
+├── opencode.jsonc          # 인라인 지침이 포함된 메인 설정 파일
+├── vibeguard.config.json   # 보안 가드 — 시크릿 스캐닝 및 마스킹
+├── package.json            # 플러그인 의존성 (npm)
+└── node_modules/           # 설치된 플러그인 (git 제외)
 ```
 
-전체 설정이 단일 `opencode.jsonc` 파일에 자체 포함되어 있습니다. 관리할 외부 마크다운 파일이 없습니다.
+설정 파일 3개로 모든 것이 구성됩니다. `node_modules/`는 git에서 제외되며, 복제 후 `npm install`을 실행하세요.
 
 <br>
 

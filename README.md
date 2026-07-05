@@ -105,6 +105,8 @@ Choose your platform:
 
 ### 2. Clone this config
 
+> **Note:** If you already have a config at `~/.config/opencode/opencode.jsonc`, back it up first.
+
 <details>
 <summary><b>macOS / Linux</b></summary>
 
@@ -139,14 +141,23 @@ copy %USERPROFILE%\opencode-config\opencode.jsonc %USERPROFILE%\.config\opencode
 ```
 </details>
 
-### 3. Verify
+### 3. Install plugins
+
+```bash
+cd ~/.config/opencode
+npm install
+```
+
+This installs the required opencode plugins (notify, vibeguard, websearch-cited).
+
+### 4. Verify
 
 ```bash
 opencode --version
 # You should see the opencode CLI version
 ```
 
-That's it. No other setup required — all agents, skills, and workflows are configured.
+That's it. All agents, skills, plugins, and workflows are configured.
 
 <br>
 
@@ -238,10 +249,13 @@ This config includes two pre-configured subagents:
 
 ```
 ~/.config/opencode/
-└── opencode.jsonc          # Main configuration with inline instructions
+├── opencode.jsonc          # Main configuration with inline instructions
+├── vibeguard.config.json   # Security guard — secret scanning & masking
+├── package.json            # Plugin dependencies (npm)
+└── node_modules/           # Installed plugins (gitignored)
 ```
 
-The entire configuration is self-contained in a single `opencode.jsonc` file. No external markdown files to manage.
+The configuration is self-contained in just three files. The `node_modules/` directory is gitignored — run `npm install` after cloning.
 
 <br>
 

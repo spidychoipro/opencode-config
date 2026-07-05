@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Opencode AI CLI plugins — managed by opencode-config",
+  "dependencies": {
+    "@opencode-ai/plugin": "^1.17.0"
+  }
+}

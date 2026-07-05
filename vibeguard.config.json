@@ -1,0 +1,23 @@
+{
+  "enabled": true,
+  "debug": false,
+  "placeholder_prefix": "__VG_",
+  "session": {
+    "ttl": "1h",
+    "max_mappings": 100000
+  },
+  "patterns": {
+    "keywords": [
+      { "value": "my-api-key-123", "category": "API_KEY" }
+    ],
+    "regex": [
+      { "pattern": "sk-[A-Za-z0-9]{48}", "category": "OPENAI_KEY" },
+      { "pattern": "(ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9]+", "category": "GITHUB_TOKEN" },
+      { "pattern": "AKIA[0-9A-Z]{16}", "category": "AWS_ACCESS_KEY" },
+      { "pattern": "(?i)(password|passwd|pwd)\\s*[=:]+\\s*['\"]?[A-Za-z0-9!@#$%^&*()_+\\-={}\\[\\]:;\"'<>,.?\\/\\\\|`~]{6,}", "category": "PASSWORD" },
+      { "pattern": "(?i)(secret|api_key|api_secret|app_key|app_secret|auth_token|access_token|refresh_token|private_key)\\s*[=:]+\\s*['\"]?[A-Za-z0-9!@#$%^&*()_+\\-={}\\[\\]:;\"'<>,.?\\/\\\\|`~]{8,}", "category": "SECRET" }
+    ],
+    "builtin": ["email", "china_phone", "china_id", "uuid", "ipv4", "mac"],
+    "exclude": ["example.com", "localhost", "127.0.0.1", "0.0.0.0"]
+  }
+}
