@@ -17,6 +17,7 @@
   <a href="https://github.com/spidychoipro/opencode-config/blob/main/README.ko.md"><img src="https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-2f81f7?style=flat-square" alt="Platform"></a>
   <a href="https://opencode.ai"><img src="https://img.shields.io/badge/opencode-1.0%2B-6c5ce7?style=flat-square" alt="opencode"></a>
   <a href="https://github.com/spidychoipro/opencode-config/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-brightgreen?style=flat-square" alt="License"></a>
+  <a href="README.md"><img src="https://img.shields.io/badge/lang-English-blue?style=flat-square" alt="English"></a>
 </p>
 
 <br>
