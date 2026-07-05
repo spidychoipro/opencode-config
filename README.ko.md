@@ -91,15 +91,15 @@
   </tr>
   <tr>
     <td><b>Linux</b></td>
-    <td><code>npm install -g @opencode/cli</code></td>
+    <td><code>npm i -g opencode-ai</code></td>
   </tr>
   <tr>
     <td><b>Windows</b></td>
-    <td><code>winget install opencode</code> 또는 <code>npm install -g @opencode/cli</code></td>
+    <td><code>winget install opencode</code> 또는 <code>npm i -g opencode-ai</code></td>
   </tr>
   <tr>
     <td><b>모든 플랫폼 (npm)</b></td>
-    <td><code>npm install -g @opencode/cli</code></td>
+    <td><code>npm i -g opencode-ai</code></td>
   </tr>
 </table>
 
