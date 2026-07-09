@@ -9,6 +9,10 @@ When working on Neovim configuration (any `.lua` file under `lua/` or `init.lua`
 - **Future-deprecated patterns**: APIs not yet deprecated but with a newer preferred alternative in latest Neovim stable should also be flagged and updated.
 - **Version-gated removals**: Any API removed or changed in the latest Neovim stable that would break the config must be fixed.
 
+Scope includes both the user's config AND third-party plugins managed by lazy.nvim.
+Plugin-originated deprecation warnings are treated as bugs — fix by monkey-patching
+the plugin in the plugin spec's `config` block (not by modifying plugin source directly).
+
 Severity: 🔴 Critical = removed (crash), 🟡 Warning = deprecated (still works but warns), 🟢 Info = newer alternative exists.
 
 ### Post-Change Verification
