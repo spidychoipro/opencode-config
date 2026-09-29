@@ -127,8 +127,9 @@ ln -sf ~/opencode-config/opencode.jsonc ~/.config/opencode/opencode.jsonc
 # Clone to your home directory
 git clone https://github.com/spidychoipro/opencode-config.git "$env:USERPROFILE\opencode-config"
 
-# Copy the config file
+# Copy the config and its instruction files
 Copy-Item -Path "$env:USERPROFILE\opencode-config\opencode.jsonc" -Destination "$env:USERPROFILE\.config\opencode\opencode.jsonc"
+Copy-Item -Recurse -Path "$env:USERPROFILE\opencode-config\instructions" -Destination "$env:USERPROFILE\.config\opencode\instructions"
 ```
 </details>
 
@@ -138,6 +139,16 @@ Copy-Item -Path "$env:USERPROFILE\opencode-config\opencode.jsonc" -Destination "
 ```cmd
 git clone https://github.com/spidychoipro/opencode-config.git %USERPROFILE%\opencode-config
 copy %USERPROFILE%\opencode-config\opencode.jsonc %USERPROFILE%\.config\opencode\opencode.jsonc
+xcopy /E /I %USERPROFILE%\opencode-config\instructions %USERPROFILE%\.config\opencode\instructions
+```
+</details>
+
+<details>
+<summary><b>Windows (WSL)</b></summary>
+
+```bash
+# WSL에서 직접 Linux 설정 사용
+git clone https://github.com/spidychoipro/opencode-config.git ~/.config/opencode
 ```
 </details>
 
@@ -243,19 +254,34 @@ This config includes two pre-configured subagents:
 | `$mobile-app` | React Native/Flutter apps | `$mobile-app` |
 | `$phase-*` | 9-phase pipeline skills | `$phase-1-schema` ... |
 
+### Optional: humanize-korean
+
+Not bundled with this repo — install it separately if you want AI-written Korean to read like a person wrote it:
+
+```bash
+git clone https://github.com/nathankim0/humanize-korean.git ~/.config/opencode/skills/humanize-korean
+```
+
+It activates on its own when the request is about writing or rewriting Korean prose.
+
 <br>
 
 ## 📁 Project Structure
 
 ```
 ~/.config/opencode/
-├── opencode.jsonc          # Main configuration with inline instructions
+├── opencode.jsonc          # Main configuration (plugins, agents, permissions)
+├── AGENTS.md               # Global rules — always loaded
+├── instructions/           # Instruction files referenced by opencode.jsonc
+│   ├── bkit.md             #   bkit PDCA + NSP workflow, coding standards
+│   ├── neovim.md           #   Neovim config-specific rules
+│   └── github-workflow.md  #   GitHub issue / PR workflow
 ├── vibeguard.config.json   # Security guard — secret scanning & masking
 ├── package.json            # Plugin dependencies (npm)
 └── node_modules/           # Installed plugins (gitignored)
 ```
 
-The configuration is self-contained in just three files. The `node_modules/` directory is gitignored — run `npm install` after cloning.
+Instructions live in their own Markdown files rather than one giant JSON string, so a broken or over-long `opencode.jsonc` can't take the whole config down, and each rule set is editable on its own. The `node_modules/` directory is gitignored — run `npm install` after cloning.
 
 <br>
 
@@ -266,7 +292,7 @@ Edit `~/.config/opencode/opencode.jsonc` to:
 - **Add plugins**: Modify the `"plugin"` array
 - **Create new agents**: Add entries to the `"agent"` object
 - **Change permissions**: Update the `"permission"` section
-- **Modify instructions**: Edit the `"instructions"` array
+- **Add an instruction set**: Drop a `.md` file in `instructions/` and add its path to the `"instructions"` array
 
 After editing, restart opencode for changes to take effect.
 
@@ -277,6 +303,8 @@ After editing, restart opencode for changes to take effect.
 | Problem | Solution |
 |---------|----------|
 | Config not loading | Verify the file is at the correct path for your OS |
+| `Bad control character in string literal` | `opencode.jsonc` is not valid JSON — check for raw line breaks inside a string |
+| Instructions not applied | Every path in `"instructions"` must exist and be relative to the config directory |
 | Agents not found | Check `"agent"` section in `opencode.jsonc` |
 | Skills not working | Run `$skill code-review` as a test |
 | Permission denied | Check `"permission"` section in config |
