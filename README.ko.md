@@ -127,8 +127,9 @@ ln -sf ~/opencode-config/opencode.jsonc ~/.config/opencode/opencode.jsonc
 # 사용자 홈 디렉토리에 복제
 git clone https://github.com/spidychoipro/opencode-config.git "$env:USERPROFILE\opencode-config"
 
-# 설정 파일 복사
+# 설정 파일과 지침 파일 복사
 Copy-Item -Path "$env:USERPROFILE\opencode-config\opencode.jsonc" -Destination "$env:USERPROFILE\.config\opencode\opencode.jsonc"
+Copy-Item -Recurse -Path "$env:USERPROFILE\opencode-config\instructions" -Destination "$env:USERPROFILE\.config\opencode\instructions"
 ```
 </details>
 
@@ -138,6 +139,7 @@ Copy-Item -Path "$env:USERPROFILE\opencode-config\opencode.jsonc" -Destination "
 ```cmd
 git clone https://github.com/spidychoipro/opencode-config.git %USERPROFILE%\opencode-config
 copy %USERPROFILE%\opencode-config\opencode.jsonc %USERPROFILE%\.config\opencode\opencode.jsonc
+xcopy /E /I %USERPROFILE%\opencode-config\instructions %USERPROFILE%\.config\opencode\instructions
 ```
 </details>
 
@@ -243,19 +245,34 @@ opencode
 | `$mobile-app` | React Native/Flutter 앱 | `$mobile-app` |
 | `$phase-*` | 9단계 파이프라인 스킬 | `$phase-1-schema` ... |
 
+### 선택: humanize-korean
+
+이 저장소에 포함되어 있지 않습니다. AI가 쓴 한국어를 사람처럼 보이게 고쳐주길 원하면 따로 설치하세요.
+
+```bash
+git clone https://github.com/nathankim0/humanize-korean.git ~/.config/opencode/skills/humanize-korean
+```
+
+한국어 문장 작성이나 다듬기를 요청하면 알아서 켜집니다.
+
 <br>
 
 ## 📁 프로젝트 구조
 
 ```
 ~/.config/opencode/
-├── opencode.jsonc          # 인라인 지침이 포함된 메인 설정 파일
+├── opencode.jsonc          # 메인 설정 (플러그인, 에이전트, 권한)
+├── AGENTS.md               # 전역 규칙 — 항상 로드됨
+├── instructions/           # opencode.jsonc가 참조하는 지침 파일
+│   ├── bkit.md             #   bkit PDCA + NSP 워크플로우, 코딩 표준
+│   ├── neovim.md           #   Neovim 설정 전용 규칙
+│   └── github-workflow.md  #   GitHub 이슈 / PR 워크플로우
 ├── vibeguard.config.json   # 보안 가드 — 시크릿 스캐닝 및 마스킹
 ├── package.json            # 플러그인 의존성 (npm)
 └── node_modules/           # 설치된 플러그인 (git 제외)
 ```
 
-설정 파일 3개로 모든 것이 구성됩니다. `node_modules/`는 git에서 제외되며, 복제 후 `npm install`을 실행하세요.
+지침은 거대한 JSON 문자열 하나에 몰아넣지 않고 Markdown 파일로 따로 관리합니다. `opencode.jsonc`가 깨져도 전체 설정이 함께 무너지지 않고, 규칙 종류별로 따로 편집할 수 있습니다. `node_modules/`는 git에서 제외되며, 복제 후 `npm install`을 실행하세요.
 
 <br>
 
@@ -266,7 +283,7 @@ opencode
 - **플러그인 추가**: `"plugin"` 배열 수정
 - **새 에이전트 생성**: `"agent"` 객체에 항목 추가
 - **권한 변경**: `"permission"` 섹션 업데이트
-- **지침 수정**: `"instructions"` 배열 편집
+- **지침 추가**: `instructions/`에 `.md` 파일을 두고 `"instructions"` 배열에 경로 추가
 
 변경 후 opencode를 다시 시작하면 적용됩니다.
 
@@ -277,6 +294,8 @@ opencode
 | 문제 | 해결 방법 |
 |---------|----------|
 | 설정이 로드되지 않음 | 파일이 OS에 맞는 올바른 경로에 있는지 확인 |
+| `Bad control character in string literal` | `opencode.jsonc`가 올바른 JSON이 아님 — 문자열 안에 실제 줄바꿈이 있는지 확인 |
+| 지침이 적용되지 않음 | `"instructions"`의 각 경로가 설정 디렉토리 기준 상대 경로로 존재하는지 확인 |
 | 에이전트를 찾을 수 없음 | `opencode.jsonc`의 `"agent"` 섹션 확인 |
 | 스킬이 작동하지 않음 | `$skill code-review`로 테스트 |
 | 권한 거부됨 | 설정의 `"permission"` 섹션 확인 |
