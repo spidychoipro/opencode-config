@@ -1,18 +1,28 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "provider": {
+    "ollama": {
+      "type": "openai",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "llama3.2:3b": {
+          "name": "Llama 3.2 3B"
+        }
+      }
+    }
+  },
+  "model": "ollama/llama3.2:3b",
   "instructions": [
     "AGENTS.md",
     "instructions/bkit.md",
     "instructions/neovim.md",
     "instructions/github-workflow.md"
   ],
-  "plugin": [
-    "opencode-notify",
-    "opencode-vibeguard",
-    ["opencode-websearch-cited", {
-      "cite_style": "wikipedia"
-    }]
-  ],
+  // V1-only plugins removed (opencode-notify, opencode-vibeguard, opencode-websearch-cited):
+  // OpenCode v2 needs a Plugin.define default export, so these failed on every startup.
+  // Re-add only when V2-compatible versions are available.
   "agent": {
     "bkit-pdca": {
       "description": "bkit PDCA workflow manager with NSP - plans, designs, implements, analyzes, and reports features",
